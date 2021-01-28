@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline } from "@material-ui/core";
+import Header from "./components/Header";
+import {
+  createMuiTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@material-ui/core/styles";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Countries from "./pages/Countries";
+import Details from "./pages/Details";
+
+let theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#112d4e",
+    },
+    secondary: {
+      main: "#3f72af",
+    },
+    background: {
+      default: "#dbe2ef",
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Header />
+      <Router>
+        <Switch>
+          <Route path="/:country/details" component={Details} />
+          <Route path="/:region" component={Countries} />
+          <Redirect from="/" to="/All" />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
